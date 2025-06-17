@@ -7,14 +7,18 @@ on:
         - dev
 
 jobs:
-    check-out:
+    checkout:
         runs-on: ubuntu-latest
         steps:
         - name: Checkout code
           uses: actions/checkout@v4
 
+        - run: |
+            pwd
+            ls -la
+
     generate-test-file:
-        needs: check-out
+        needs: checkout
         runs-on: ubuntu-latest
         steps:
         - name: Generate test file
@@ -34,6 +38,11 @@ jobs:
           uses: actions/setup-node@v4
           with:
             node-version: "lts/*"
+        
+        - run: |
+            pwd
+            ls -la
+
         - name: Dry run to get the next release version
           id: semantic_release_step # 給這個步驟一個 ID，以便引用其輸出
           run: |

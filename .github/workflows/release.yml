@@ -7,7 +7,14 @@ on:
         - dev
 
 jobs:
+    check-out:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+
     generate-test-file:
+        needs: check-out
         runs-on: ubuntu-latest
         steps:
         - name: Generate test file

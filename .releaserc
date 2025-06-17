@@ -1,0 +1,30 @@
+# 定義將release的分支 (來源：https://semantic-release.gitbook.io/semantic-release/usage/configuration#options)
+# release.config.yml 或 .releaserc.yml
+branches:
+  # 主發布分支 - 發布穩定版本到 @latest
+  - name: "main"
+    # range: "0.x.x" 通常不設在 main 上，除非你特意想限制主要版本號
+    # prerelease: false (或不設定，預設就是 false)
+    # channel: "@latest" (或不設定，預設就是 @latest)
+
+  # 預發布開發分支 - 發布預覽版本到特定的通道 (例如 npm 的 @next, @beta 或 @dev)
+  # - name: "dev" # 常用作主要開發線
+    # channel: "dev" # 可選，指定通道名稱，否則默認是分支名作為通道名
+    # prerelease: true # 自動生成如 0.1.0-dev.1, 0.1.0-dev.2
+  # 維護分支 - 為舊主要版本提供更新，發布到特定通道
+  # - name: "1.x.x"
+  #   range: "1.x.x"
+  #   channel: "1.x" # 例如 npm install my-package@1.x
+
+  # 其他預發布分支，如果需要
+  # - name: "alpha"
+  #   prerelease: "alpha"
+  #   channel: "alpha"
+
+plugins:
+  - "@semantic-release/commit-analyzer"
+  - "@semantic-release/release-notes-generator"
+  - - "@semantic-release/github" # 這個是插件名稱
+    - assets: # 這是插件的選項，它是一個物件
+        - path: "export/test.txt"
+          label: "測試文本"

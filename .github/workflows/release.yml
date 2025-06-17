@@ -7,49 +7,21 @@ on:
         - dev
 
 jobs:
-    checkout:
+    release:
         runs-on: ubuntu-latest
+      
         steps:
         - name: Checkout code
-          uses: actions/checkout@v4
-
-        - run: |
-            pwd
-            ls -la
-
-    generate-test-file:
-        needs: checkout
-        runs-on: ubuntu-latest
-        steps:
+          uses: actions/checkout@v4 
+        
         - name: Generate test file
           run: |
-            echo "This is a test file." > test.txt
-
-    release-project-on-pr-merge:
-        needs: generate-test-file 
-        defaults: 
-            run:
-                shell: bash
-        runs-on: ubuntu-latest
-        outputs:
-            next_tag_version: ${{ steps.semantic_release_step.outputs.new_tag_version }} # 將下一個標籤版本作為輸出
-        steps:
+            echo "This is a test file." > test.txt        
+        
         - name: Setup Node.js
           uses: actions/setup-node@v4
           with:
             node-version: "lts/*"
-        
-        - run: |
-            pwd
-            ls -la
-
-        - name: Dry run to get the next release version
-          id: semantic_release_step # 給這個步驟一個 ID，以便引用其輸出
-          run: |
-              export NEXT_TAG_VERSION=$(npx semantic-release --dry-run | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)$/\1/')
-              echo "new_tag_version=${NEXT_TAG_VERSION}" >> $GITHUB_OUTPUT
-          env:                      
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
 
         - name: Release
           run: |

@@ -13,8 +13,7 @@ branches:
     prerelease: true # 自動生成如 0.1.0-dev.1, 0.1.0-dev.2
 
   - name: "milestones" # milestone 分支 - 驗收版本
-    channel: "milestone" # 可選，指定通道名稱
-    prerelease: true
+    prerelease: flase # 不自動生成預發布版本
   
   - name: "beta" # beta 分支 - 驗收版本
     channel: "beta" # 可選，指定通道名稱

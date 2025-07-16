@@ -15,9 +15,8 @@ branches:
   - name: "milestones" # milestone 分支 - 驗收版本
     prerelease: false # 不自動生成預發布版本
   
-  - name: "beta" # beta 分支 - 驗收版本
-    channel: "beta" # 可選，指定通道名稱
-    prerelease: true
+  - name: "release/*" # 針對大版本的beta分支
+    prerelease: "beta" # 例如 beta 分支會生成 X.0.0-beta.1, X.0.0-beta.2 等版本
 
   # 維護分支 - 為舊主要版本提供更新，發布到特定通道
   # - name: "1.x.x"
@@ -36,8 +35,10 @@ branches:
 
 plugins:
   - "@semantic-release/commit-analyzer"
+  # - preset: "conventionalcommits"
   - "@semantic-release/release-notes-generator"
-  - - "@semantic-release/github" # 這個是插件名稱
-    - assets: # 這是插件的選項，它是一個物件
+  # - preset: "conventionalcommits"
+  - "@semantic-release/github" # 這個是插件名稱
+  - - assets: # 這是插件的選項，它是一個物件
         - path: "test.txt"
           label: "測試文本"

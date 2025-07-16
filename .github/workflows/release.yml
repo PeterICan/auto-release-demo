@@ -5,6 +5,7 @@ on:
         branches:
         - main # 僅針對合併到 main 分支的 PR
         - dev
+        - milestones
 
 jobs:
     release:

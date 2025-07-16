@@ -8,9 +8,13 @@ branches:
     # channel: "@latest" (或不設定，預設就是 @latest)
 
   # 預發布開發分支 - 發布預覽版本到特定的通道 (例如 npm 的 @next, @beta 或 @dev)
-  # - name: "dev" # 常用作主要開發線
-    # channel: "dev" # 可選，指定通道名稱，否則默認是分支名作為通道名
-    # prerelease: true # 自動生成如 0.1.0-dev.1, 0.1.0-dev.2
+  - name: "dev" # 常用作主要開發線
+    channel: "dev" # 可選，指定通道名稱，否則默認是分支名作為通道名
+    prerelease: true # 自動生成如 0.1.0-dev.1, 0.1.0-dev.2
+
+  - name: "milestones" # milestone 分支 - 驗收版本
+    channel: "milestone"
+
   # 維護分支 - 為舊主要版本提供更新，發布到特定通道
   # - name: "1.x.x"
   #   range: "1.x.x"
@@ -20,6 +24,11 @@ branches:
   # - name: "alpha"
   #   prerelease: "alpha"
   #   channel: "alpha"
+
+  # milestone 分支 - 用於特定版本的發布
+  # - name: "milestone"
+  #   range: "0.x.x"
+
 
 plugins:
   - "@semantic-release/commit-analyzer"

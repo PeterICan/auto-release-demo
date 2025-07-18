@@ -35,16 +35,69 @@ branches:
 
 plugins:
   - - "@semantic-release/commit-analyzer"
-    - preset: "angular"
-    # - preset: "conventionalcommits"
+    - preset: "angular" # 保留 commit-analyzer 的 preset
       releaseRules:
-      - type: "feat"
-        scope: "patch"
+      - type: "patch"
         release: "patch"
-      - type: "feat"
-        scope: "major"
+      - type: "major"
         release: "major"
-  - "@semantic-release/release-notes-generator"
+      - type: "art"
+        release: false
+  - - "@semantic-release/release-notes-generator"
+    - preset: "conventionalcommits"
+      presetConfig:
+    # 這是因為需要完全控制 transform 函數，避免 preset 的內部 transform 覆蓋我們的邏輯。
+    # 如果移除 preset，將需要手動定義所有 commitTypes 和 releaseRules 對應的 section。
+    # 更好的方式是保留 preset，並覆蓋其 transform。
+        types:
+          # --- 核心功能類型 ---
+          - type: "major" # 將 'major' type 映射到「🚀 重大更新」
+            section: "✨ 新功能"
+            hidden: false
+          - type: "feat" # 將 'feat' type 映射到「✨ 新功能」
+            section: "✨ 新功能"
+            hidden: false
+          - type: "patch" # 將 'patch' type 映射到「💡 微幅功能/修正」
+            section: "💡 微幅功能"
+            hidden: false
+
+          # --- 修復類型 ---
+          - type: "fix"
+            section: "🐛 Bug 修復"
+            hidden: false
+
+          # --- 其他自定義類型 ---
+          - type: "art" # 將 'art' type 映射到「🎨 美術與視覺資源更新」
+            section: "🎨 美術與視覺資源更新"
+            hidden: false
+
+          # --- 其他標準類型 (必須全部明確列出，否則會被隱藏) ---
+          - type: "perf"
+            section: "⚡ 性能優化"
+            hidden: false
+          - type: "refactor"
+            section: "🧹 程式碼重構"
+            hidden: false
+          - type: "docs"
+            section: "📝 文件更新"
+            hidden: false
+          - type: "chore"
+            section: "🔧 其他雜項"
+            hidden: false
+          - type: "revert"
+            section: "⏪ 版本回溯"
+            hidden: false
+
+          # 您可以選擇在這裡將不希望顯示的類型明確設定 hidden: true
+          - type: "style"
+            hidden: true
+          - type: "test"
+            hidden: true
+          - type: "build"
+            hidden: true
+          - type: "ci"
+            hidden: true
+            
   - "@semantic-release/github" # 這個是插件名稱
   - - assets: # 這是插件的選項，它是一個物件
         - path: "test.txt"

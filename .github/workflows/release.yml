@@ -25,6 +25,17 @@ jobs:
           uses: actions/setup-node@v4
           with:
             node-version: "lts/*"
+        
+        - name: Cache Node.js modules # <--- 這裡使用快取
+          uses: actions/cache@v4
+          with:
+            path: ~/.npm # 快取 npm 的快取目錄，或者直接快取 node_modules: path: node_modules
+            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }} # 快取鍵，基於 OS 和 package-lock.json 的哈希值
+            restore-keys: |
+              ${{ runner.os }}-node-
+        
+        - name: Install dependencies # <--- 安裝依賴 (如果快取命中則跳過或很快)
+          run: npm ci 
 
         - name: Release
           run: |

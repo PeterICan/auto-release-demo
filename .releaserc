@@ -35,8 +35,10 @@ branches:
 
 plugins:
   - "@semantic-release/commit-analyzer"
+  # - preset: "conventionalcommits"
   - "@semantic-release/release-notes-generator"
-  - - "@semantic-release/github" # 這個是插件名稱
-    - assets: # 這是插件的選項，它是一個物件
+  # - preset: "conventionalcommits"
+  - "@semantic-release/github" # 這個是插件名稱
+  - - assets: # 這是插件的選項，它是一個物件
         - path: "test.txt"
           label: "測試文本"

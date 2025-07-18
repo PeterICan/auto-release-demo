@@ -41,6 +41,9 @@ plugins:
       - type: "feat"
         scope: "patch"
         release: "patch"
+      - type: "feat"
+        scope: "major"
+        release: "major"
   - "@semantic-release/release-notes-generator"
   - "@semantic-release/github" # 這個是插件名稱
   - - assets: # 這是插件的選項，它是一個物件
